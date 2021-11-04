@@ -7,10 +7,15 @@ const output = fs.createWriteStream(filePath, 'utf-8');
 stdout.write('Hello, please write text.\n');
 stdin.on('data', data => {
   const str = data.toString();
-  if (str.trim() == 'exit') {
+  if (str.trim() === 'exit') {
     stdout.write('See you soon!\n');
     process.exit();
   } else {
     output.write(data);
   }
+});
+
+process.on('SIGINT', () => {
+  console.log('See you soon!');
+  process.exit();
 });
